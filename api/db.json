@@ -35,24 +35,6 @@
       "departmant": "Nurse",
       "salary": "12000",
       "id": 9
-    },
-    {
-      "name": "esrdg",
-      "departmant": "dg",
-      "salary": "2",
-      "id": 10
-    },
-    {
-      "name": "adsf",
-      "departmant": "f",
-      "salary": "3",
-      "id": 11
-    },
-    {
-      "name": "Alex",
-      "departmant": "add",
-      "salary": "26",
-      "id": 12
     }
   ]
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import UserConsumer from "../context";
 import axios from "axios";
+import { Link } from "react-router-dom";
 class User extends Component {
   state = {
     isVisible: false,
@@ -43,7 +44,7 @@ class User extends Component {
 
   render() {
     console.log("userprops=>", this.props);
-    const { name, departmant, salary } = this.props;
+    const { id, name, departmant, salary } = this.props;
     const { isVisible } = this.state;
 
     return (
@@ -74,6 +75,9 @@ class User extends Component {
                 <ul>
                   <li>departman:{departmant}</li>
                   <li>Salary:{salary}</li>
+                  <Link to={`edit/${id}`}>
+                    <button style={{ backgrounColor: "blue" }}>Update</button>
+                  </Link>
                 </ul>
               ) : null}
             </div>

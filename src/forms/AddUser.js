@@ -20,10 +20,11 @@ const Animation = posed.div({
 });
 class AddUser extends Component {
   state = {
-    visible: false,
+    visible: true,
     name: "",
     departmant: "",
     salary: 0,
+    err: false,
   };
   changeVisibility = () => {
     this.setState({
@@ -37,7 +38,13 @@ class AddUser extends Component {
       [e.target.name]: e.target.value,
     });
   };
-
+  validateForm = () => {
+    const { name, salary, departmant } = this.state;
+    if (name === "" || salary === 0 || departmant === "") {
+      return false;
+    }
+    return true;
+  };
   addUser = async (dispatch, e) => {
     e.preventDefault();
     console.log("test");
@@ -50,16 +57,27 @@ class AddUser extends Component {
       departmant: departmant,
       salary: salary,
     };
+
+    if (!this.validateForm()) {
+      this.setState({
+        err: true,
+      });
+      return;
+    }
+
     const res = await axios.post("http://localhost:3004/users", newUser);
     // console.log("postres", res);
     //console.log(newUser);
     dispatch({ type: "ADD_USER", payload: res.data });
+    //  this.props.history.push("/"); // redirect
     this.setState({
       name: "",
       departmant: "",
       salary: 0,
+      err: false,
     });
-  }; //payload: newUser
+  };
+  //payload: newUser
   // bu sekildede yakalayabuliriz veya yukardaki gibi e.target sakilinde
   //   changeName = (e) => {
   //     this.setState({
@@ -78,7 +96,7 @@ class AddUser extends Component {
   //   };
 
   render() {
-    const { visible, name, salary, departmant } = this.state;
+    const { visible, name, salary, departmant, err } = this.state;
 
     return (
       <UserConsumer>
@@ -97,6 +115,7 @@ class AddUser extends Component {
                 <div>
                   <h1>Addd User Form </h1>
                   <div>
+                    {err ? <div>Please check your information</div> : null}
                     <form onSubmit={this.addUser.bind(this, dispatch)}>
                       <div>
                         <label htmlFor="name">Name</label>
